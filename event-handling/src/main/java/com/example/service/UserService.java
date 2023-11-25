@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
 	private final ApplicationEventPublisher publisher;
-	public void signUp() {
+	public void signUp(String email, String name) {
 		//1.유저저장
 		//repository.save(user);
 		//2.메일발송
-		publisher.publishEvent(new SignUpEvent("test@test.com", "green"));
+		publisher.publishEvent(new SignUpEvent(email, name));
 	}
 }
