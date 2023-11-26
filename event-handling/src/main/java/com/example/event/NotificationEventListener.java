@@ -22,6 +22,7 @@ public class NotificationEventListener {
 
 	@EventListener
 	@Async
+	/* @EnableAsync 추가하고, @Async 사용가능 */
 	public void emailListenerAsync(SignUpAsyncEvent event) {
 		// 이메일 발송 로직 호출
 		notificationExecutor.sendEmail(event.getEmail(), "가입축하메일-async", "가입을 축하합니다.");
