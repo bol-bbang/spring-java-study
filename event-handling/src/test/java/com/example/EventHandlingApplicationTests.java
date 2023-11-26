@@ -17,7 +17,15 @@ class EventHandlingApplicationTests {
 
 	@Test
 	void 가입메일발송() {
-		userService.signUp("test@test.com", "green");
+		String email = "send@test.com";
+//		String email = "user-save@fail.com";
+//		String email = "send-email@fail.com";
+		String name = "green";
+		userService.signUp(email, name);
+
+		List<User> all = userService.getUsers();
+		assertThat(all.size()).isEqualTo(1);
+		assertThat(all.get(0).getEmail()).isEqualTo(email);
 	}
 
 	@Test

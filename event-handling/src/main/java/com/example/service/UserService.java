@@ -28,6 +28,9 @@ public class UserService {
 	public User createUser(String email, String name) {
 		log.info("유저 저장, email: {}, name: {}", email, name);
 		User user = new User(email, name);
+		if(email.equals("user-save@fail.com")) {
+			throw new RuntimeException("유저 저장 실패");
+		}
 		return userRepository.save(user);
 	}
 
