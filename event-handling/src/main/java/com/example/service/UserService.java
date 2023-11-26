@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.event.SignUpAsyncEvent;
 import com.example.event.SignUpEvent;
 import com.example.service.user.entity.User;
 import com.example.service.user.repository.UserRepository;
@@ -25,6 +26,16 @@ public class UserService {
 		log.info("sync >> before publish event! thread_id: {}", Thread.currentThread().getId());
 		publisher.publishEvent(new SignUpEvent(email, name));
 		log.info("sync >> after publish event! thread_id: {}", Thread.currentThread().getId());
+	}
+
+	public void signUp_asyncSendEmail(String email, String name) {
+
+		//1.유저저장
+		createUser(email, name);
+		//2.메일발송(async)
+		log.info("async >> before publish event! thread_id: {}", Thread.currentThread().getId());
+		publisher.publishEvent(new SignUpAsyncEvent(email, name));
+		log.info("async >> after publish event! thread_id: {}", Thread.currentThread().getId());
 	}
 
 	public User createUser(String email, String name) {
