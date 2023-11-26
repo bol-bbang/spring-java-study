@@ -13,5 +13,6 @@ public class NotificationExecutor {
 			throw new RuntimeException("이메일 발송 실패");
 		}
 		log.info("send email, recipient:{}, title:{}, contents:{}", recipient, title, contents);
+		log.info("send email! thread_id: {}", Thread.currentThread().getId());
 	}
 }

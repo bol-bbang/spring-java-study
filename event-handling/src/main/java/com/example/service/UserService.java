@@ -22,7 +22,9 @@ public class UserService {
 		//1.유저저장
 		createUser(email, name);
 		//2.메일발송
+		log.info("sync >> before publish event! thread_id: {}", Thread.currentThread().getId());
 		publisher.publishEvent(new SignUpEvent(email, name));
+		log.info("sync >> after publish event! thread_id: {}", Thread.currentThread().getId());
 	}
 
 	public User createUser(String email, String name) {
