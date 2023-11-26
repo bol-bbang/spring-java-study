@@ -20,22 +20,31 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	public void signUp(String email, String name) {
+		/**
+		 * @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+		 * 메일발송 -> 유저저장(exception발생) 순서로 테스트 결과
+		 * 메일발송 실행안되고, 유저저장에서 에러발생
+		 * */
+		//1.유저저장
+		createUser(email, name);
 		//2.메일발송
 		log.info("sync >> before publish event! thread_id: {}", Thread.currentThread().getId());
 		publisher.publishEvent(new SignUpEvent(email, name));
 		log.info("sync >> after publish event! thread_id: {}", Thread.currentThread().getId());
-		//1.유저저장
-		createUser(email, name);
 	}
 
 	public void signUp_asyncSendEmail(String email, String name) {
-
+		/**
+		 * @EventListener @Async
+		 * 메일발송 -> 유저저장(exception발생) 순서로 테스트 결과
+		 * 메일발송은 실행되고, 유저저장에서 에러발생
+		 * */
+		//1.유저저장
+		createUser(email, name);
 		//2.메일발송(async)
 		log.info("async >> before publish event! thread_id: {}", Thread.currentThread().getId());
 		publisher.publishEvent(new SignUpAsyncEvent(email, name));
 		log.info("async >> after publish event! thread_id: {}", Thread.currentThread().getId());
-		//1.유저저장
-		createUser(email, name);
 	}
 
 	public User createUser(String email, String name) {
