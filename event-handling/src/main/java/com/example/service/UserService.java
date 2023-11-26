@@ -25,10 +25,10 @@ public class UserService {
 		publisher.publishEvent(new SignUpEvent(email, name));
 	}
 
-	private void createUser(String email, String name) {
-		User user = new User(email, name);
-		userRepository.save(user);
+	public User createUser(String email, String name) {
 		log.info("유저 저장, email: {}, name: {}", email, name);
+		User user = new User(email, name);
+		return userRepository.save(user);
 	}
 
 	public List<User> getUsers() {
