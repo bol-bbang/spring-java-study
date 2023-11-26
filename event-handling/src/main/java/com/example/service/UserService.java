@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -27,5 +29,10 @@ public class UserService {
 		User user = new User(email, name);
 		userRepository.save(user);
 		log.info("유저 저장, email: {}, name: {}", email, name);
+	}
+
+	public List<User> getUsers() {
+		List<User> all = userRepository.findAll();
+		return all;
 	}
 }
